@@ -7,9 +7,10 @@ package org.fonis.tajmer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.applet.*;
+import javax.sound.sampled.*;
 import java.net.*;
-
+import java.io.*;
+import sun.audio.*;
 /**
  *
  * @author Laza
@@ -25,6 +26,7 @@ public class TajmerGUI extends javax.swing.JFrame {
     int satizareset = 0;
     int minzareset = 15;
     int sekzareset = 0;
+    boolean zvuk=true;
     Timer t = new Timer(1000, new ActionListener() {
 
         public void actionPerformed(ActionEvent e) {
@@ -34,13 +36,18 @@ public class TajmerGUI extends javax.swing.JFrame {
                 t.stop();
 
                 jButton1.setEnabled(false);
-                /*try {
-                    AudioClip clip = Applet.newAudioClip(
-                            new URL("file://alarm.wav"));
-                    clip.play();
-                } catch (MalformedURLException murle) {
-                    System.out.println(murle);
-                }*/
+                if (zvuk){
+               try{
+                   InputStream inputStream = getClass().getResourceAsStream("expl.wav");
+                   AudioStream audioStream = new AudioStream(inputStream);
+                   AudioPlayer.player.start(audioStream);
+               }
+                     catch (Exception c)
+  {
+      System.out.println(c);
+  }
+                }
+                
             } else {
                 if (sek == 0 && min != 0) {
                     sek = 60;
@@ -85,6 +92,7 @@ public class TajmerGUI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -143,7 +151,13 @@ public class TajmerGUI extends javax.swing.JFrame {
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/fonis/tajmer/FONIS4LogoVector.png"))); // NOI18N
-        jLabel6.setMaximumSize(new java.awt.Dimension(547, 149));
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/fonis/tajmer/sound_high.png"))); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -175,7 +189,11 @@ public class TajmerGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,18 +224,24 @@ public class TajmerGUI extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jButton4)
                         .addGap(29, 29, 29)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(106, 106, 106)
@@ -309,6 +333,19 @@ public class TajmerGUI extends javax.swing.JFrame {
                 "<html>Autor: Lazar Stanojlovic@FONIS <br>Aplikacija za mrenje vremena.</html>");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+       if(zvuk){
+       zvuk=false;
+       Icon mute = new ImageIcon(getClass().getResource("/org/fonis/tajmer/Mute.png"));
+       jButton5.setIcon(mute);
+       }
+       else {
+           zvuk=true;
+           Icon unmute = new ImageIcon(getClass().getResource("/org/fonis/tajmer/sound_high.png"));
+           jButton5.setIcon(unmute);
+       }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -355,6 +392,7 @@ public class TajmerGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

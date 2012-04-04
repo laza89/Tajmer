@@ -1,0 +1,6 @@
+Timer
+
+Aplikacija koja odbrojava zadato vreme i ispisuje ga. Za pustanje, resetovanje i pauziranje tajmera koriste se dugmici. 
+Moguce je podesiti tajmer (po default-u 15min) na najvise 99 sati. Kada se odbrojavanje zavrsi pusta se kratak zvuk.
+Postoje 3 zvuka uz program (alarm, bomba, eksplozija) moguce ih je promeniti u kodu.
+Skinuti Tajmer.jar fajl iz dist foldera i pokrenuti ga.
